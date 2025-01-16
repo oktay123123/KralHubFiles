@@ -1,11 +1,11 @@
--- GUI oluşturulması
+
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local SliderFrame = Instance.new("Frame")
 local SliderButton = Instance.new("Frame")
 local SpeedLabel = Instance.new("TextLabel")
 
--- GUI'nin CoreGui'ye eklenmesi (kalıcı hale getirmek için)
+
 ScreenGui.Parent = game:GetService("CoreGui") -- PlayerGui yerine CoreGui kullanılır
 
 Frame.Parent = ScreenGui
@@ -16,7 +16,7 @@ Frame.BorderSizePixel = 0
 Frame.Active = true -- Çerçeveyi sürüklemek için gerekli
 Frame.Draggable = true -- Çerçeveyi sürüklemeyi etkinleştirir
 
--- Hız etiketini oluşturma
+
 SpeedLabel.Parent = Frame
 SpeedLabel.Size = UDim2.new(1, 0, 0, 30)
 SpeedLabel.Position = UDim2.new(0, 0, 0, 10)
@@ -25,20 +25,20 @@ SpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedLabel.BackgroundTransparency = 1
 SpeedLabel.TextSize = 18
 
--- Kaydırıcı çerçevesi
+
 SliderFrame.Parent = Frame
 SliderFrame.Size = UDim2.new(1, -20, 0, 10)
 SliderFrame.Position = UDim2.new(0, 10, 0, 50)
 SliderFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50) -- Siyah temaya uygun gri çerçeve
 SliderFrame.BorderSizePixel = 0
 
--- Kaydırıcı butonunu oluşturma
+
 SliderButton.Parent = SliderFrame
 SliderButton.Size = UDim2.new(0, 20, 1, 0)
 SliderButton.Position = UDim2.new(0, 0, 0, 0)
 SliderButton.BackgroundColor3 = Color3.fromRGB(0, 200, 0) -- Kaydırıcı için yeşil renk
 
--- Kaydırıcı sınırları ve hız ayarları
+
 local sliderMin = 0
 local sliderMax = 5000
 local sliderWidth = SliderFrame.AbsoluteSize.X
@@ -51,7 +51,7 @@ local function updateSliderValue()
     SpeedLabel.Text = "Hız: " .. newValue
     _G.WS = newValue
 
-    -- Hızı sürekli güncelle
+
     local player = game.Players.LocalPlayer
     if player.Character and player.Character:FindFirstChild("Humanoid") then
         local Humanoid = player.Character.Humanoid
@@ -59,21 +59,21 @@ local function updateSliderValue()
     end
 end
 
--- Kaydırıcı çubuğunu sürüklemeye başlama
+
 SliderFrame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         isDragging = true
     end
 end)
 
--- Kaydırıcı çubuğunu sürüklemeyi durdurma
+
 SliderFrame.InputEnded:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
         isDragging = false
     end
 end)
 
--- Kaydırıcı hareketini sınırlandırma
+
 game:GetService("UserInputService").InputChanged:Connect(function(input)
     if isDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
         local mouse = game:GetService("Players").LocalPlayer:GetMouse()
@@ -83,7 +83,7 @@ game:GetService("UserInputService").InputChanged:Connect(function(input)
     end
 end)
 
--- Frame'in sürüklenmesini sınırlama (kaydırıcı aktifken)
+
 Frame.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 and isDragging then
         Frame.Draggable = false
@@ -96,7 +96,6 @@ Frame.InputEnded:Connect(function(input)
     end
 end)
 
--- Hızı sürekli tekrar etme
 game:GetService("RunService").RenderStepped:Connect(function()
     if _G.WS then
         local player = game.Players.LocalPlayer
@@ -107,7 +106,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
     end
 end)
 
--- RemoteEvent işlemi
+
 while true do
     wait(1)
     local tbl_main = {"LiftWeight"}
