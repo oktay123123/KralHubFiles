@@ -1,0 +1,64 @@
+-- Ekranda görüntülenecek olan GUI'yi oluşturuyoruz
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Arka plan (siyah kutu)
+local backgroundFrame = Instance.new("Frame")
+backgroundFrame.Parent = screenGui
+backgroundFrame.Size = UDim2.new(0, 500, 0, 150) -- Arka planın boyutu
+backgroundFrame.Position = UDim2.new(0.5, -250, 0.5, -75) -- Ekranın ortasında
+backgroundFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- Siyah renk
+
+-- "KralHub" yazısı
+local textLabel = Instance.new("TextLabel")
+textLabel.Parent = backgroundFrame
+textLabel.Text = "KralHub"
+textLabel.Font = Enum.Font.GothamBold
+textLabel.TextSize = 80
+textLabel.TextColor3 = Color3.fromRGB(255, 0, 0) -- Kırmızı renk
+textLabel.BackgroundTransparency = 1
+textLabel.Position = UDim2.new(0.5, -150, 0.5, -40) -- Ekranın ortasında, arka plana göre yerleştiriyoruz
+textLabel.Size = UDim2.new(0, 300, 0, 80)
+textLabel.TextStrokeTransparency = 0.2 -- Yazının kenarını belirginleştiriyoruz (gölgelendirme efekti)
+textLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0) -- Siyah gölge efekti
+
+-- TweenService ile animasyonları başlatacağız
+local TweenService = game:GetService("TweenService")
+
+-- Yazıyı büyütüyoruz ve kaybolmaya başlatıyoruz
+local goal1 = {
+    Transparency = 0, -- Yazı tamamen görünür olacak
+    Size = UDim2.new(0, 500, 0, 150), -- Arka planın boyutu da büyüyecek
+}
+
+local tweenInfo1 = TweenInfo.new(2, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out)
+local tween1 = TweenService:Create(backgroundFrame, tweenInfo1, goal1)
+local tweenText1 = TweenService:Create(textLabel, tweenInfo1, goal1)
+
+-- Toz efektiyle kaybolma animasyonu
+local goal2 = {
+    Transparency = 1, -- Yazı ve arka plan kaybolacak
+    Size = UDim2.new(0, 0, 0, 0), -- Arka plan küçülecek ve kaybolacak
+}
+
+local tweenInfo2 = TweenInfo.new(2, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+local tween2 = TweenService:Create(backgroundFrame, tweenInfo2, goal2)
+local tweenText2 = TweenService:Create(textLabel, tweenInfo2, goal2)
+
+-- Animasyonu başlatıyoruz
+tween1:Play()
+tweenText1:Play()
+
+-- Animasyon bitince toz efekti ile kaybolmayı başlatıyoruz
+tween1.Completed:Connect(function()
+    tween2:Play()
+    tweenText2:Play()
+end)
+
+-- Animasyon tamamlandığında GUI'yi kaldırıyoruz ve dışarıdan gelen scripti çalıştırıyoruz
+tween2.Completed:Connect(function()
+    screenGui:Destroy()
+
+    -- Burada dışarıdan alınan loadstring ile scripti çalıştırıyoruz
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/oktay123123/KralHubFiles/refs/heads/main/KralLiftingSim"))()
+end)
