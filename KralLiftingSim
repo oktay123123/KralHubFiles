@@ -9,7 +9,7 @@ local Window = Library.CreateLib("KralLiftingSim", "DarkTheme")
     end)
 
     MainSection:NewButton("Otomatik Araçlar", "W addrian_dacap", function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/oktay123123/YusufveOktay/refs/heads/main/Otomatik"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/oktay123123/KralHubFiles/refs/heads/main/KralLiftingSim-menu"))()
     end)
     -- HIZLAR
     local Main1 = Window:NewTab("Hızlar")
