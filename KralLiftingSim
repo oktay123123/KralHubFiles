@@ -20,5 +20,5 @@ local Window = Library.CreateLib("KralLiftingSim", "DarkTheme")
     end)
 
     Main1Section:NewButton("Hız", "W addrian_dacap", function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/oktay123123/KralHubFiles/refs/heads/main/KralLiftringSim-hiz"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/oktay123123/KralHubFiles/refs/heads/main/KralLiftingSim-hiz"))()
     end)
